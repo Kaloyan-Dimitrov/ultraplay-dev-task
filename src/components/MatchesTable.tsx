@@ -2,78 +2,47 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Backdrop, CircularProgress, TableBody, Table, TableCell, TableContainer, TableRow } from '@mui/material';
 import './MatchesTable.css';
+import { allMatches, parseData, formatDate } from '../utils/MatchesData';
 
-interface Match {
+export interface Bet {
+  '1': number
+  'X'?: number
+  '2': number
+}
+
+export interface Match {
   id: string
   date: Date
   name: string
-  bet: {
-    '1': number
-    'X'?: number
-    '2': number
-  }
+  bet: Bet
   game: string
   league: string
 }
 
+export interface Game {
+  game: string
+  league: string
+  matches: Match[]
+}
+
 const MatchesTable: React.FC = () => {
-  const [games, setGames] = useState(null);
+  const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
+  const [error, setError] = useState<any>(null);
 
   const getData = async (): Promise<boolean> => {
     try {
       const response = await fetch('http://localhost:8081/matches');
       const dataJSON = await response.json();
-      console.log(Object.keys(dataJSON.XmlSports.Sport['0']));
-      const dataMatches = dataJSON.XmlSports.Sport['0'].Event;
-      setGames(parseData(dataMatches));
-      console.log(games);
+      setGames(parseData(dataJSON));
       setLoading(false);
       return true;
     } catch (err) {
-      // setError(err);
-      console.error(err);
+      setError(err);
+      console.log(err);
       setLoading(false);
       return false;
     }
-  };
-
-  const parseData = (dt: any): any => {
-    return dt.map((game: any) => {
-      return {
-        game: game.$.Name.split(', ')[0],
-        league: game.$.Name.split(', ')[1],
-        matches: game.Match.map((match: any): Match => {
-          return {
-            id: match.$.ID,
-            date: new Date(match.$.StartDate),
-            name: match.$.Name,
-            bet: match.Bet[0].Odd.reduce((res: any, curr: any) => {
-              res[curr.$.Name] = curr.$.Value;
-              return res;
-            }, {}),
-            game: game.$.Name.split(', ')[0],
-            league: game.$.Name.split(', ')[1]
-          };
-        })
-      };
-    });
-  };
-
-  const allMatches = (dt: any): Match[] => {
-    if (dt === null) return [];
-    return dt.map((game: any) => game.matches.map((match: any) => ({ ...match, game: game.game, league: game.league }))).flat().sort((a: Match, b: Match) => a.date.getTime() - b.date.getTime());
-  };
-
-  const formatDate = (date: Date): string => {
-    return date.toLocaleString('en-US', {
-      day: 'numeric',
-      month: 'short',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric'
-    });
   };
 
   useEffect(() => {
@@ -84,6 +53,8 @@ const MatchesTable: React.FC = () => {
 
   return (
     <div style={{ width: '100%' }}>
+      {error !== null && <div>Error: {error?.message}</div>}
+
       <TableContainer sx={{ width: '100%' }}>
         <Table sx={{ width: '100%' }} size="small">
           <TableBody>
