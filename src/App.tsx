@@ -1,25 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { ThemeProvider } from '@emotion/react';
-import { AppBar } from '@mui/material';
+import { createTheme, PaletteOptions, ThemeOptions } from '@mui/material';
+import Header from './components/Header';
+import MatchesTable from './components/MatchesTable';
 
-// create theme mui
-const theme = {
+declare module '@mui/material/styles' {
+  interface Theme {
+    palette: {
+      primary: {
+        main: string
+      }
+    }
+  }
+  interface ThemeOptions {
+    palette?: PaletteOptions
+  }
+}
+// configure primary color
+
+const themeOptions: ThemeOptions = {
   palette: {
     primary: {
-      main: '#1976d2'
-    },
-    secondary: {
-      main: '#dc004e'
+      main: '#213951'
     }
   }
 };
-// add an appbar to the app component
+const theme = createTheme(themeOptions);
 
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
+      <Header></Header>
+      <MatchesTable></MatchesTable>
     </ThemeProvider>
   );
 };
