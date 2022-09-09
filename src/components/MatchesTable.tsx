@@ -1,64 +1,21 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { Backdrop, CircularProgress, TableBody, Table, TableCell, TableContainer, TableRow } from '@mui/material';
-import './MatchesTable.css';
-import { allMatches, parseData, formatDate } from '../utils/MatchesData';
+import { TableBody, Table, TableCell, TableContainer, TableRow } from '@mui/material';
+import './Table.css';
+import { allMatches, formatDate } from '../utils/MatchesData';
+import { League, Match } from '../App';
 
-export interface Bet {
-  '1': number
-  'X'?: number
-  '2': number
+interface Props {
+  leagues: League[]
 }
 
-export interface Match {
-  id: string
-  date: Date
-  name: string
-  bet: Bet
-  game: string
-  league: string
-}
-
-export interface Game {
-  game: string
-  league: string
-  matches: Match[]
-}
-
-const MatchesTable: React.FC = () => {
-  const [games, setGames] = useState<Game[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<any>(null);
-
-  const getData = async (): Promise<boolean> => {
-    try {
-      const response = await fetch('http://localhost:8081/matches');
-      const dataJSON = await response.json();
-      setGames(parseData(dataJSON));
-      setLoading(false);
-      return true;
-    } catch (err) {
-      setError(err);
-      console.log(err);
-      setLoading(false);
-      return false;
-    }
-  };
-
-  useEffect(() => {
-    getData()
-      .then(res => console.log(res ? 'Successfully fetched and parsed data' : 'Error fetching data'))
-      .catch(console.error);
-  }, []);
-
+const MatchesTable: React.FC<Props> = ({ leagues }) => {
   return (
     <div style={{ width: '100%' }}>
-      {error !== null && <div>Error: {error?.message}</div>}
 
       <TableContainer sx={{ width: '100%' }}>
         <Table sx={{ width: '100%' }} size="small">
           <TableBody>
-            {allMatches(games).map((match: Match, index) => {
+            {allMatches(leagues).map((match: Match, index) => {
               const gameRow =
                 <TableRow
                   key={match.id}
@@ -71,7 +28,7 @@ const MatchesTable: React.FC = () => {
                 </TableRow>;
 
               if (index !== 0) {
-                if (match.league === allMatches(games)[index - 1].league) {
+                if (match.league === allMatches(leagues)[index - 1].league) {
                   return gameRow;
                 }
               }
@@ -92,13 +49,6 @@ const MatchesTable: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={loading}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
     </div>
   );
 };

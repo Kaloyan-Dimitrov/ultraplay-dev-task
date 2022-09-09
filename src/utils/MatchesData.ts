@@ -1,4 +1,4 @@
-import { Game, Match, Bet } from '../components/MatchesTable';
+import { League, Match, Bet } from '../App';
 
 const parseBet = (bet: any): Bet => {
   return bet.reduce((res: any, curr: any) => {
@@ -9,12 +9,12 @@ const parseBet = (bet: any): Bet => {
 
 export const parseData = (dt: any): any => {
   const dataMatches = dt.XmlSports.Sport['0'].Event;
-  return dataMatches.map((game: any): Game => {
+  return dataMatches.map((game: any): League => {
     const gameName = game.$.Name.split(', ')[0];
     const leagueName = game.$.Name.split(', ')[1];
     return {
       game: gameName,
-      league: leagueName,
+      name: leagueName,
       matches: game.Match.map((match: any): Match => {
         return {
           id: match.$.ID,
@@ -29,9 +29,9 @@ export const parseData = (dt: any): any => {
   });
 };
 
-export const allMatches = (games: Game[]): Match[] => {
+export const allMatches = (games: League[]): Match[] => {
   return games
-    .map((game: Game) => game.matches)
+    .map((game: League) => game.matches)
     .flat()
     .sort((a: Match, b: Match) => a.date.getTime() - b.date.getTime());
 };

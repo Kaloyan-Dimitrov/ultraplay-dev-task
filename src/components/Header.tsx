@@ -1,17 +1,23 @@
 // react appbar component
 
 import * as React from 'react';
-import { AppBar, Toolbar, Typography } from '@mui/material';
+import { AppBar, Button, Toolbar, Typography } from '@mui/material';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 
-const Header: React.FC = () => {
+interface Props {
+  sortBy: 'league' | 'date'
+  changeSortBy: () => void
+}
+
+const Header: React.FC<Props> = ({ sortBy, changeSortBy }) => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <SportsEsportsIcon sx={{ mr: 2 }} />
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <SportsEsportsIcon />
+        <Typography variant="h6" component="div" sx={{ mr: 2, ml: 2 }}>
           Esports
         </Typography>
+        <Button variant="contained" color="secondary" onClick={() => changeSortBy()}>Sort by {sortBy === 'date' ? 'league' : 'date'} </Button>
       </Toolbar>
     </AppBar>
   );
