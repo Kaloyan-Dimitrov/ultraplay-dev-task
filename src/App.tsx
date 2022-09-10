@@ -3,9 +3,9 @@ import './App.css';
 import { ThemeProvider } from '@emotion/react';
 import { Backdrop, CircularProgress, createTheme, PaletteOptions, ThemeOptions } from '@mui/material';
 import Header from './components/Header';
-import MatchesTable from './components/MatchesTable';
+import ByDateTable from './components/ByDateTable';
 import { parseData } from './utils/MatchesData';
-import GamesTable from './components/GamesTable';
+import ByGamesTable from './components/ByGamesTable';
 
 declare module '@mui/material/styles' {
   interface Theme {
@@ -91,12 +91,12 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       {error !== null
-        ? <div>Error: {error?.message}</div>
+        ? <div data-testid="error">Error: {error?.message}</div>
         : <>
           <Header sortBy={sortBy} changeSortBy={changeSortBy}></Header>
           {sortBy === 'date'
-            ? <MatchesTable leagues={leagues}/>
-            : <GamesTable leagues={leagues}/>
+            ? <ByDateTable leagues={leagues}/>
+            : <ByGamesTable leagues={leagues}/>
           }
         </>
       }

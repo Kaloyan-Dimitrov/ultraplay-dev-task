@@ -30,6 +30,7 @@ export const GameLeaguesRow: React.FC<Props> = ({ gameName, allLeagues }) => {
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}
+            data-testid="expand-button"
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -38,7 +39,7 @@ export const GameLeaguesRow: React.FC<Props> = ({ gameName, allLeagues }) => {
 
       <TableRow>
         <TableCell style={{ padding: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse in={open} timeout="auto" data-testid="collapsible" unmountOnExit>
             <TableContainer sx={{ width: '100%' }}>
               <Table sx={{ width: '100%' }} size="small">
                 <TableBody>
@@ -47,7 +48,6 @@ export const GameLeaguesRow: React.FC<Props> = ({ gameName, allLeagues }) => {
                       <LeagueMatchesRow key={league.name} league={league} />
                     ))
                   }
-
                 </TableBody>
               </Table>
             </TableContainer>

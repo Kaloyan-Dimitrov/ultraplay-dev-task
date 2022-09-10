@@ -7,7 +7,7 @@ const parseBet = (bet: any): Bet => {
   }, {});
 };
 
-export const parseData = (dt: any): any => {
+export const parseData = (dt: any): League[] => {
   const dataMatches = dt.XmlSports.Sport['0'].Event;
   return dataMatches.map((league: any): League => {
     const gameName = league.$.Name.split(', ')[0];
