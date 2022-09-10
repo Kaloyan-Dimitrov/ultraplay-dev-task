@@ -9,13 +9,13 @@ const parseBet = (bet: any): Bet => {
 
 export const parseData = (dt: any): any => {
   const dataMatches = dt.XmlSports.Sport['0'].Event;
-  return dataMatches.map((game: any): League => {
-    const gameName = game.$.Name.split(', ')[0];
-    const leagueName = game.$.Name.split(', ')[1];
+  return dataMatches.map((league: any): League => {
+    const gameName = league.$.Name.split(', ')[0];
+    const leagueName = league.$.Name.split(', ')[1];
     return {
       game: gameName,
       name: leagueName,
-      matches: game.Match.map((match: any): Match => {
+      matches: league.Match.map((match: any): Match => {
         return {
           id: match.$.ID,
           date: new Date(match.$.StartDate),
@@ -29,15 +29,19 @@ export const parseData = (dt: any): any => {
   });
 };
 
-export const allMatches = (games: League[]): Match[] => {
-  return games
-    .map((game: League) => game.matches)
+export const allMatches = (leagues: League[]): Match[] => {
+  return leagues
+    .map((league: League) => league.matches)
     .flat()
     .sort((a: Match, b: Match) => a.date.getTime() - b.date.getTime());
 };
 
+export const getLeaguesByGame = (leagues: League[], game: string): League[] => {
+  return leagues.filter((l: League) => l.game === game);
+};
+
 export const formatDate = (date: Date): string => {
-  return date.toLocaleString('en-US', {
+  return date.toLocaleString(navigator.language, {
     day: 'numeric',
     month: 'short',
     hour: 'numeric',

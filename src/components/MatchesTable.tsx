@@ -20,11 +20,11 @@ const MatchesTable: React.FC<Props> = ({ leagues }) => {
                 <TableRow
                   key={match.id}
                 >
-                  <TableCell className="date-cell">{formatDate(match.date)}</TableCell>
-                  <TableCell>{match.name}</TableCell>
-                  <TableCell>{match.bet['1']}</TableCell>
-                  <TableCell>{match.bet.X}</TableCell>
-                  <TableCell>{match.bet['2']}</TableCell>
+                  <TableCell width={'15%'} className="date-cell">{formatDate(match.date)}</TableCell>
+                  <TableCell width={'37%'}>{match.name}</TableCell>
+                  <TableCell width={'16%'} className="bet-cell">{match.bet['1']}</TableCell>
+                  <TableCell width={'16%'} className="bet-cell">{match.bet.X}</TableCell>
+                  <TableCell width={'16%'} className="bet-cell">{match.bet['2']}</TableCell>
                 </TableRow>;
 
               if (index !== 0) {
@@ -38,10 +38,10 @@ const MatchesTable: React.FC<Props> = ({ leagues }) => {
                   key={match.id + match.league}
                   className="league-row"
                 >
-                  <TableCell colSpan={2}>{match.league}</TableCell>
-                  <TableCell>1</TableCell>
-                  <TableCell>X</TableCell>
-                  <TableCell>2</TableCell>
+                  <TableCell width={'52%'} colSpan={2}>{match.league}</TableCell>
+                  <TableCell width={'16%'} className="bet-cell">1</TableCell>
+                  <TableCell width={'16%'} className="bet-cell">X</TableCell>
+                  <TableCell width={'16%'} className="bet-cell">2</TableCell>
                 </TableRow>;
 
               return [leagueRow, gameRow];

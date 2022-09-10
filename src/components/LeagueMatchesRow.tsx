@@ -19,23 +19,24 @@ export const LeagueMatchesRow: React.FC<Props> = ({ league }) => {
     <React.Fragment>
 
       <TableRow className="league-row">
-        <TableCell colSpan={2}>
+        <TableCell width={'52%'} colSpan={2}>
           <IconButton
             aria-label="expand row"
             size="small"
+            sx={{ padding: '0', mr: '1em' }}
             onClick={() => setOpen(!open)}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
           {league.name}
         </TableCell>
-        <TableCell>1</TableCell>
-        <TableCell>X</TableCell>
-        <TableCell>2</TableCell>
+        <TableCell className="bet-cell">1</TableCell>
+        <TableCell className="bet-cell">X</TableCell>
+        <TableCell className="bet-cell">2</TableCell>
       </TableRow>
 
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ padding: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <TableContainer sx={{ width: '100%' }}>
               <Table sx={{ width: '100%' }} size="small">
@@ -44,11 +45,11 @@ export const LeagueMatchesRow: React.FC<Props> = ({ league }) => {
                     <TableRow
                       key={match.id}
                     >
-                      <TableCell className="date-cell">{formatDate(match.date)}</TableCell>
-                      <TableCell>{match.name}</TableCell>
-                      <TableCell>{match.bet['1']}</TableCell>
-                      <TableCell>{match.bet.X}</TableCell>
-                      <TableCell>{match.bet['2']}</TableCell>
+                      <TableCell className="date-cell" width={'15%'} >{formatDate(match.date)}</TableCell>
+                      <TableCell width={'37%'}>{match.name}</TableCell>
+                      <TableCell className="bet-cell" width={'16%'}>{match.bet['1']}</TableCell>
+                      <TableCell className="bet-cell" width={'16%'}>{match.bet.X}</TableCell>
+                      <TableCell className="bet-cell" width={'16%'}>{match.bet['2']}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

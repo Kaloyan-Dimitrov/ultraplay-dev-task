@@ -11,7 +11,7 @@ interface Props {
 
 const Header: React.FC<Props> = ({ sortBy, changeSortBy }) => {
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ borderBottom: '1px white solid' }}>
       <Toolbar>
         <SportsEsportsIcon />
         <Typography variant="h6" component="div" sx={{ mr: 2, ml: 2 }}>

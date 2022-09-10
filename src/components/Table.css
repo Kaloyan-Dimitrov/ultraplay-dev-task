@@ -7,5 +7,16 @@
 
 .date-cell {
 	text-align: center;
-	font-weight: bold;
+	font-weight: bold !important;
+}
+
+.bet-cell {
+	text-align: center !important;
+}
+
+.game-row > * {
+	color: white !important;
+	text-transform: uppercase;
+	font-weight: bold !important;
+	font-size: 1.2em !important;
 }
