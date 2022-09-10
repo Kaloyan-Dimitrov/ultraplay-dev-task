@@ -1,4 +1,5 @@
-// react appbar component
+// Description: Header component, which contains the button to
+// sort the table by date or by league
 
 import * as React from 'react';
 import { AppBar, Button, Toolbar, Typography } from '@mui/material';

@@ -1,3 +1,10 @@
+// Description: Component for the table, sorted by date.
+// It simply displays all the matches in a chronological order.
+// Each match is displayed in two rows: one for the match's date, name and bet
+//                                  and one for the league name.
+// When two or more consecutive matches are in the same league,
+// the league row is displayed only once: before the first one.
+
 import * as React from 'react';
 import { TableBody, Table, TableCell, TableContainer, TableRow } from '@mui/material';
 import './Table.css';

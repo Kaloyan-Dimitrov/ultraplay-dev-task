@@ -19,8 +19,7 @@ declare module '@mui/material/styles' {
     palette?: PaletteOptions
   }
 }
-// configure primary color
-
+// configure custom primary and secondary colors
 const themeOptions: ThemeOptions = {
   palette: {
     primary: {
@@ -88,6 +87,7 @@ const App: React.FC = () => {
       .then(res => console.log(res ? 'Successfully fetched and parsed data' : 'Error fetching data'))
       .catch(console.error);
   }, []);
+
   return (
     <ThemeProvider theme={theme}>
       {error !== null

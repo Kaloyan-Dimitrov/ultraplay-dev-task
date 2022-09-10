@@ -1,4 +1,6 @@
-// create a collapsible table row component
+// Description: This component is used to display the section for each game.
+// It contains the name of the game as the first row
+// and a collapsible section, containing all the leagues in that game.
 
 import * as React from 'react';
 import { Collapse, IconButton, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';

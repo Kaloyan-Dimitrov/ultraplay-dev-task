@@ -1,3 +1,8 @@
+// Description: Component for the table, sorted by league/game.
+// This component displays all the matches in proprietary collapsible sections.
+// There is a section for each game, inside of which there are sections for each league,
+// containing the matches of that league.
+
 import React from 'react';
 import { League } from '../App';
 import { TableBody, Table, TableContainer } from '@mui/material';
